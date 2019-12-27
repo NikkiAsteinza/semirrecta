@@ -1,0 +1,55 @@
+from decimal import *
+import math
+import sys
+p1=(1,1)
+p2=(15,8)
+interval=0.01
+
+def m(p1,p2):
+    a=p2[1]-p1[1]
+    b=p2[0]-p1[0]
+    return (a/b)
+#la pendiente de esta recta multiplicada
+#por la pendiente perpendicular es -1
+
+def normal(m):
+    x=-1/m
+    print("normal:",x)
+    return round(x,2)
+
+def firstPoint(p1,p2):
+    stop=1
+    init=p2[0]
+
+    #calculamos recta perpendicular
+    _perpendicular =normal(m(p1,p2))
+    #Array de puntos de la recta
+    RectPoint = None
+    #Calcular corte del eje, ordenada en el origen
+    _cutYAxis_y=_perpendicular*(0-init)+p2[1]
+    print("ordenada en el origen: ",_cutYAxis_y)
+    calculatePoint(init,_perpendicular,_cutYAxis_y)
+    #yCoordinate=None
+    #calcular puntos de la recta
+def calculatePoint(init,_perpendicular,_cutYAxis_y):
+      #storedInterval=interval
+      xvalue=round(init+interval,2)
+      a=(xvalue*_perpendicular)
+      yvalue=round(a+_cutYAxis_y,2)
+      xCoordinate = xvalue
+      yCoordinate = yvalue
+      print(xCoordinate,yCoordinate)
+      floor_yCoordinate= math.floor(yCoordinate)
+      floor_xCoordinate = math.floor(xCoordinate)
+      print(floor_xCoordinate,floor_yCoordinate)
+      restaX=round(xCoordinate-floor_xCoordinate,2)
+      restaY=round(yCoordinate-floor_yCoordinate,2)
+      suma=abs(restaX+restaY)
+      print(suma)
+      if suma<0.01:
+         return (xCoordinate,yCoordinate)
+      else:
+          calculatePoint(xCoordinate,_perpendicular,_cutYAxis_y)
+
+
+firstPoint(p1,p2)
